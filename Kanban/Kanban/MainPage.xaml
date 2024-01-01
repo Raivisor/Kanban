@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CarouselPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Kanban.MainPage">
+    <ContentPage>
+        <StackLayout>
+            <Frame BackgroundColor="red" CornerRadius="50" Margin="5,5,5,5">
+                <Label Text="Предстоящие задачи" TextColor ="White" HorizontalOptions="Center"/>
+            </Frame>
+            <StackLayout x:Name="Create_Task_Layout" IsVisible="False" VerticalOptions="Center">
+                <Entry x:Name="Entry_Task_Name" Placeholder="Название задания:"/>
+                <Entry x:Name="Entry_Task_Description" Placeholder="Описание задания:" VerticalOptions="Center"/>
+                <Button Text="Добавить задачу" Clicked ="Create_Task" VerticalOptions="Fill"/>
+                <Button Text="Отмена" Clicked="Rollback" VerticalOptions="End"/>
+            </StackLayout>
+            <StackLayout x:Name="Change_Task_Layout" IsVisible="False" VerticalOptions="Center">
+                <Entry x:Name="Change_Task_Name" Placeholder="Название задания:"/>
+                <Entry x:Name="Change_Task_Description" Placeholder="Описание задания:" VerticalOptions="Center"/>
+                <Button Text="Изменить задачу" Clicked ="Change_task_Upcoming" VerticalOptions="Fill"/>
+                <Button Text="Отмена" Clicked="Rollback" VerticalOptions="End"/>
+            </StackLayout>
+            <CollectionView x:Name="Created_Tasks" Margin="5,0,5,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="35" BackgroundColor="Gray" Margin="10">
+                            <Grid>
+                                <Label Text="{Binding Name}" Grid.Row="0" VerticalOptions="Center" Grid.Column="0"/>
+                                <Label Text="{Binding Description}" VerticalOptions="Center" Grid.Row="1" Grid.Column="0"/>
+                                <Button Text="Удалить задачу" Clicked="Delete_Upcoming_Task" TabIndex="{Binding ID}" Grid.Row="0" Grid.Column="1"/>
+                                <Button Text="Изменить задачу" Clicked="Show_Change_Layout" TabIndex="{Binding ID}" Grid.Row="1" Grid.Column="1"/>
+                                <Button Text="Взяться за задачу" Clicked="To_In_progress" TabIndex="{Binding ID}" Grid.Row="2" Grid.Column="1"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Text="Добавить задачу" VerticalOptions="EndAndExpand" HorizontalOptions="Center" Clicked="Show_Create_Layout"/>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage x:Name="Complete">
+        <StackLayout>
+            <Frame BackgroundColor="Orange" CornerRadius="50" Margin="5,5,5,5">
+                <Label Text="В процессе" TextColor="White" HorizontalOptions="Center"/>
+            </Frame>
+            <CollectionView x:Name="In_Progress" Margin="5,0,5,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="35" BackgroundColor="Gray" Margin="10">
+                            <Grid>
+                                <Label Text="{Binding Name}" Grid.Row="0" VerticalOptions="Center" Grid.Column="0"/>
+                                <Label Text="{Binding Description}" VerticalOptions="Center" Grid.Row="1" Grid.Column="0"/>
+                                <Button Text="Завершить задачу" Clicked="To_Completed" TabIndex="{Binding ID}" Grid.Row="2" Grid.Column="1"/>
+                                <Button Text="Отказаться от задачи" Clicked="To_Upcoming" TabIndex="{Binding ID}" Grid.Row="2" Grid.Column="0"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage>
+    <ContentPage>
+        <StackLayout>
+            <Frame BackgroundColor="Green" CornerRadius="50" Margin="5,5,5,5">
+                <Label Text="Завершённые задачи"/>
+            </Frame>
+            <CollectionView x:Name="Completed_Tasks" Margin="5,0,5,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame CornerRadius="35" BackgroundColor="Gray" Margin="10">
+                            <Grid>
+                                <Label Text="{Binding Name}" Grid.Row="0" VerticalOptions="Center" Grid.Column="0"/>
+                                <Label Text="{Binding Description}" VerticalOptions="Center" Grid.Row="1" Grid.Column="0"/>
+                                <Button Text="Изменить задачу" TabIndex="{Binding ID}" Clicked="To_Upcoming_From_Completed" Grid.Row="2" Grid.Column="0"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage>
+</CarouselPage>
